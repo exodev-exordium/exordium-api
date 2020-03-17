@@ -13,7 +13,11 @@
   "keywords": [
     "exordium"
   ],
-  "author": "FearGannicus <contact@exordium.dev> (https://exordium.dev)",
+  "author": {
+    "name": "FearGannicus",
+    "email": "contact@exordium.dev",
+    "url": "https://exordium.dev"
+  },
   "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/exordium-dev/exordium-api/issues"
@@ -23,7 +27,9 @@
     "nodemon": "^2.0.2"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
   }
 }
