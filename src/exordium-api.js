@@ -21,8 +21,19 @@ app.listen(port);
 app.use(function(req, res) {
   res.status(404).send({
     status: false,
+    msg: 'The data you requested could not be found.',
     url: req.originalUrl + ' not found'
   })
 });
 
-console.log('RESTful API server started on: ' + port);
+// Custom 403 Erroring
+app.use(function(req, res) {
+  res.status(403).send({
+    status: false,
+    msg: 'Invalid or incorrect Authorization Bearer Token. Please make sure you use the correct one.',
+    url: req.originalUrl + ' forbidden.'
+  })
+});
+
+console.log('Exordium API. Now running...')
+console.log(`https://${process.env.APP_HOSTNAME}:${port}/`);
