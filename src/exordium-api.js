@@ -6,18 +6,33 @@ Date: 2020-03-16
 
 */
 
-// Require .env
-require('dotenv').config()
+// Modules
+const dotenv = require('dotenv');
+const express = require('express');
+const cors = require('cors');
 
-// Require Express
-var express = require('express'),
-  app = express(),
-  port = process.env.PORT || 3000;
+// Grab the .env configuration
+dotenv.config();
+
+// Setup the server
+const app = express();
+const port = process.env.PORT || 3000;
+
+// Require Database Connection
+const config = require('./database/config');
+const connection = require('./database/connection');
+const getQuery = require('./database/getQuery');
 
 // Create server on the PORT
-app.listen(port);
+app.listen(port, () => {
+  console.log('Exordium API. Now running...')
+  console.log(`https://${process.env.APP_HOSTNAME}:${port}/`);
+});
 
-// Custom 404 Erroring
+// CORS
+app.use(cors());
+
+// Error: 403
 app.use(function(req, res) {
   res.status(404).send({
     status: false,
@@ -26,7 +41,7 @@ app.use(function(req, res) {
   })
 });
 
-// Custom 403 Erroring
+// Error: 403
 app.use(function(req, res) {
   res.status(403).send({
     status: false,
@@ -34,6 +49,3 @@ app.use(function(req, res) {
     url: req.originalUrl + ' forbidden.'
   })
 });
-
-console.log('Exordium API. Now running...')
-console.log(`https://${process.env.APP_HOSTNAME}:${port}/`);
