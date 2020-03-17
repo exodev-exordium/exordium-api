@@ -1,0 +1,28 @@
+{
+  "name": "exordium-api",
+  "version": "0.1.0",
+  "description": "API system for Exordium virtual private networking software and the Exordium website. ",
+  "main": "src/exordium-api.js",
+  "scripts": {
+    "start": "nodemon src/exordium-api.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/exordium-dev/exordium-api.git"
+  },
+  "keywords": [
+    "exordium"
+  ],
+  "author": "FearGannicus <contact@exordium.dev> (https://exordium.dev)",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/exordium-dev/exordium-api/issues"
+  },
+  "homepage": "https://github.com/exordium-dev/exordium-api#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
