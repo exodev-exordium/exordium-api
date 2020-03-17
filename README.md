@@ -14,7 +14,16 @@ We hope to share as much of our programming as open source code to help others c
 
 The current features that are in the works for the system;
 - [ ] Authentication
+  - [ ] token
+    - [ ] get: shows the current token (if there is one valid)
+    - [ ] post:
 - [ ] User Management
+  - [ ] me (Returns currently signed in user information)
+  - [ ] connect
+    - [ ] get: lists all current sessions
+    - [ ] post: adds another connected session
+    - [ ] put: updates an already existing session (with last connected times)
+    - [ ] delete: remove an expired session
 - [ ] Server Management
 - [ ] Blog/Post Management
 
