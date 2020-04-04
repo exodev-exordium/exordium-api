@@ -58,14 +58,21 @@ app.listen(port, () => {
 // Express error handling
 app.use((req, res, next) => {
   setImmediate(() => {
-      next(new Error('Something went wrong'));
+      next(new Error(`Internal Server Error`));
   });
 });
 app.use(function (err, req, res, next) {
-  console.error(err.message);
+  var IPAddress = req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
   if (!err.statusCode) {
     err.statusCode = 500;
   }
 
-  res.status(err.statusCode).send(err.message);
+  console.error(`${err.statusCode} [${IPAddress}]: ${err.message}`);
+
+  res.status(err.statusCode).json({
+    statusCode: err.statusCode,
+    message: err.message,
+    ipAddr: IPAddress
+  });
 });
