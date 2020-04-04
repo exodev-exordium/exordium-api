@@ -9,62 +9,63 @@ Date: 2020-03-16
 // Modules
 const dotenv = require('dotenv');
 const express = require('express');
-const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 // Grab the .env configuration
 dotenv.config();
 
+// Require Database Connection
+const dbConfig = require('./database/db');
+
+// MongoDB conection
+mongoose.Promise = global.Promise;
+mongoose.connect(dbConfig.db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log('Database connected')
+},
+    error => {
+        console.log("Database can't be connected: " + error)
+    }
+)
+
+// Remvoe MongoDB warning error
+mongoose.set('useCreateIndex', true);
+
 // Setup the server
 const app = express();
-const port = process.env.PORT || 3000;
-
-// Require Database Connection
-const config = require('./database/config');
-const connection = require('./database/connection');
-const getQuery = require('./database/getQuery');
-
-// Require Routers
-const authTokenRouter = require('./routes/auth/token');
-
-// Add Directory Routing
-app.use('/auth', authTokenRouter);
-
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
-
-// parse various different custom JSON types as JSON
 app.use(bodyParser.json({ type: 'application/*+json' }));
-
-// parse some custom thing into a Buffer
-app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }));
-
-// parse an HTML body into a string
-app.use(bodyParser.text({ type: 'text/html' }));
-
-// CORS
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors());
 
-// Error: 403
-app.use(function(req, res) {
-  res.status(404).send({
-    status: false,
-    msg: 'The data you requested could not be found.',
-    url: req.originalUrl + ' not found'
-  })
-});
+// Serve Static Resources
+app.use('/public', express.static('public'));
 
-// Error: 403
-app.use(function(req, res) {
-  res.status(403).send({
-    status: false,
-    msg: 'Invalid or incorrect Authorization Bearer Token. Please make sure you use the correct one.',
-    url: req.originalUrl + ' forbidden.'
-  })
-});
+// Require Routers
+const authRouter = require('./routes/auth.routes');
+app.use('/auth', authRouter);
 
 // Create server on the PORT
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log('Exordium API. Now running...')
   console.log(`https://${process.env.APP_HOSTNAME}:${port}/`);
+});
+
+// Express error handling
+app.use((req, res, next) => {
+  setImmediate(() => {
+      next(new Error('Something went wrong'));
+  });
+});
+app.use(function (err, req, res, next) {
+  console.error(err.message);
+  if (!err.statusCode) {
+    err.statusCode = 500;
+  }
+
+  res.status(err.statusCode).send(err.message);
 });
