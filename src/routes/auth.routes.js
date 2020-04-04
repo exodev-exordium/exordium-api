@@ -27,17 +27,27 @@ router.post("/register",
     ],
     (req, res, next) => {
         const errors = validationResult(req);
+        const ipAddress = req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
         console.log(req.body);
 
         if (!errors.isEmpty()) {
             return res.status(422).jsonp(errors.array());
-        }
-        else {
+        } else {
             bcrypt.hash(req.body.password, 10).then((hash) => {
                 const user = new userSchema({
-                    name: req.body.name,
+                    username: req.body.name,
                     email: req.body.email,
-                    password: hash
+                    password: hash,
+                    registration: {
+                        country: req.body.country,
+                        ipAddress: ipAddress,
+                        registeredAt: new Date().now
+                    },
+                    updated: {
+                        ipAddress: ipAddress,
+                        updatedAt: new Date().now
+                    },
+                    realname: req.body.realname || undefined,
                 });
                 user.save().then((response) => {
                     res.status(201).json({
