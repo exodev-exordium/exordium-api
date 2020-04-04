@@ -40,10 +40,12 @@ let userSchema = new Schema({
         }
     },
     title: {
-        type: String
+        type: String,
+        default: 'User'
     },
     access: {
-        type: String
+        type: String,
+        default: 'user'
     }
     
 }, {
