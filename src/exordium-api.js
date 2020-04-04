@@ -49,7 +49,7 @@ const authRouter = require('./routes/auth.routes');
 app.use('/auth', authRouter);
 
 // Create server on the PORT
-const port = process.env.PORT || 3000;
+const port = process.env.APP_PORT || 3000;
 app.listen(port, () => {
   console.log('Exordium API. Now running...')
   console.log(`https://${process.env.APP_HOSTNAME}:${port}/`);
