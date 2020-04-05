@@ -119,8 +119,8 @@ router.post("/signin", (req, res, next) => {
         let jwtToken = jwt.sign({
             email: getUser.email,
             userId: getUser._id
-        }, "longer-secret-is-better", {
-            expiresIn: "1h"
+        }, process.env.APP_JWTKEY, {
+            expiresIn: "3h"
         });
         res.status(200).json({
             status: "success",
