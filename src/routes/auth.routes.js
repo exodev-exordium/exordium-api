@@ -1,10 +1,18 @@
+const dotenv = require('dotenv');
 const express = require("express");
+const Request = require("request");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const router = express.Router();
 const userSchema = require("../models/user");
 const authorize = require("../middleware/auth");
 const { check, validationResult } = require('express-validator');
+
+// Grab the .env configuration
+dotenv.config();
+
+// Google Recaptcha Variables
+var grecaptcha = "https://www.google.com/recaptcha/api/siteverify?";
 
 // Sign-up
 router.post("/register",
@@ -20,10 +28,14 @@ router.post("/register",
         check('country', 'Country is required')
             .not()
             .isEmpty(),
-        check('password', 'Password should be between 5 to 8 characters long')
+        check('password', 'Password should be between 5 to 64 characters long')
             .not()
             .isEmpty()
-            .isLength({ min: 5, max: 8 })
+            .isLength({ min: 5, max: 64 }),
+        check('recaptcha')
+            .not()
+            .isEmpty()
+            .withMessage('Must provide valid recaptcha response')
     ],
     (req, res, next) => {
         const errors = validationResult(req);
@@ -33,33 +45,52 @@ router.post("/register",
         if (!errors.isEmpty()) {
             return res.status(422).jsonp(errors.array());
         } else {
-            bcrypt.hash(req.body.password, 10).then((hash) => {
-                const user = new userSchema({
-                    username: req.body.name,
-                    email: req.body.email,
-                    password: hash,
-                    registration: {
-                        country: req.body.country,
-                        ipAddress: ipAddress,
-                        registeredAt: new Date().now
-                    },
-                    updated: {
-                        ipAddress: ipAddress,
-                        updatedAt: new Date().now
-                    },
-                    realname: req.body.realname || undefined,
-                });
-                user.save().then((response) => {
-                    res.status(201).json({
-                        message: "User successfully created!",
-                        result: response
+
+            var checkRecaptcha = `${grecaptcha}secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${req.body.recaptcha}&remoteip=${ipAddress}`
+            Request(checkRecaptcha, function(error, resp, body) {
+                body = JSON.parse(body);
+
+                console.log(`${checkRecaptcha}`);
+                console.log(body);
+
+                if (body.success !== undefined && !body.success) {
+                    return res.status(422).jsonp({"status": "error", "message": "Captcha Validation failed"});
+                } else {
+                    bcrypt.hash(req.body.password, 10).then((hash) => {
+                        const user = new userSchema({
+                            username: req.body.username,
+                            email: req.body.email,
+                            password: hash,
+                            registration: {
+                                country: {
+                                    code: req.body.country.code,
+                                    name: req.body.country.name
+                                },
+                                ipAddress: ipAddress,
+                                registeredAt: new Date().now
+                            },
+                            updated: {
+                                ipAddress: ipAddress,
+                                updatedAt: new Date().now
+                            },
+                            realname: req.body.realname || undefined,
+                        });
+                        user.save().then((response) => {
+                            res.status(201).json({
+                                status: "success",
+                                message: "User successfully created!",
+                                result: response
+                            });
+                        }).catch(error => {
+                            res.status(500).json({
+                                status: "error",
+                                error: error
+                            });
+                        });
                     });
-                }).catch(error => {
-                    res.status(500).json({
-                        error: error
-                    });
-                });
+                }
             });
+
         }
     });
 
@@ -72,6 +103,7 @@ router.post("/signin", (req, res, next) => {
     }).then(user => {
         if (!user) {
             return res.status(401).json({
+                status: "error",
                 message: "Authentication failed"
             });
         }
@@ -80,6 +112,7 @@ router.post("/signin", (req, res, next) => {
     }).then(response => {
         if (!response) {
             return res.status(401).json({
+                status: "error",
                 message: "Authentication failed"
             });
         }
@@ -90,12 +123,14 @@ router.post("/signin", (req, res, next) => {
             expiresIn: "1h"
         });
         res.status(200).json({
+            status: "success",
             token: jwtToken,
             expiresIn: 3600,
             _id: getUser._id
         });
     }).catch(err => {
         return res.status(401).json({
+            status: "error",
             message: "Authentication failed"
         });
     });
