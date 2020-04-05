@@ -25,10 +25,10 @@ mongoose.connect(dbConfig.db, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
-    console.log('Database connected')
+    console.log('Mongodb: Connected')
 },
     error => {
-        console.log("Database can't be connected: " + error)
+        console.log("Mongodb: Database can't be connected: " + error)
     }
 )
 
@@ -37,8 +37,8 @@ mongoose.set('useCreateIndex', true);
 
 // Setup the server
 const app = express();
-app.use(bodyParser.json({ type: 'application/*+json' }));
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.json());
+//app.use(express.urlencoded())
 app.use(cors());
 
 // Serve Static Resources
@@ -51,8 +51,7 @@ app.use('/auth', authRouter);
 // Create server on the PORT
 const port = process.env.APP_PORT || 3000;
 app.listen(port, () => {
-  console.log('Exordium API. Now running...')
-  console.log(`https://${process.env.APP_HOSTNAME}:${port}/`);
+  console.log(`Exordium API. Running: \thttps://${process.env.APP_HOSTNAME}:${port}/`)
 });
 
 // Express error handling
