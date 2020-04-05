@@ -5,10 +5,12 @@ const uniqueValidator = require('mongoose-unique-validator');
 let userSchema = new Schema({
 
     username: {
-        type: String
+        type: String,
+        lowercase: true
     },
     email: {
         type: String,
+        lowercase: true,
         unique: true
     },
     password: {
@@ -22,13 +24,19 @@ let userSchema = new Schema({
     },
     registration: {
         country: {
-            type: String
+            code: {
+                type: String
+            },
+            name: {
+                type: String
+            }
         },
         ipAddress: {
             type: String
         },
         registeredAt: {
-            type: Date
+            type: Date,
+            default: Date.now
         }
     },
     updated: {
@@ -36,7 +44,8 @@ let userSchema = new Schema({
             type: String
         },
         updatedAt: {
-            type: Date
+            type: Date,
+            default: Date.now
         }
     },
     title: {
@@ -45,6 +54,7 @@ let userSchema = new Schema({
     },
     access: {
         type: String,
+        lowercase: true,
         default: 'user'
     }
     
