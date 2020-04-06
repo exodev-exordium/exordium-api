@@ -56,6 +56,11 @@ let userSchema = new Schema({
         type: String,
         lowercase: true,
         default: 'user'
+    },
+    tokens: {
+        token: {
+            type: String
+        }
     }
     
 }, {
