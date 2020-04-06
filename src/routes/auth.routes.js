@@ -120,12 +120,12 @@ router.post("/signin", (req, res, next) => {
             email: getUser.email,
             userId: getUser._id
         }, process.env.APP_JWTKEY, {
-            expiresIn: "3h"
+            expiresIn: "2h"
         });
         res.status(200).json({
             status: "success",
             token: jwtToken,
-            expiresIn: 3600,
+            expiresIn: 7200,
             _id: getUser._id
         });
     }).catch(err => {
@@ -146,6 +146,28 @@ router.route('/').get((req, res) => {
         }
     })
 })
+
+// Get My User Data
+router.route('/user/me').get(authorize, (req, res, next) => {
+    try {
+        const user = userSchema.findOne({
+            _id: req.id,
+            email: req.email
+        }, (error, response) => {
+            if (error) {
+                return next(error)
+            } else {
+                res.status(200).json({response})
+            }
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(401).json({
+            status: "error",
+            message: "Authentication failed"
+        });
+    }
+});
 
 // Get Single User
 router.route('/user/:id').get(authorize, (req, res, next) => {
