@@ -137,7 +137,7 @@ router.post("/signin", (req, res, next) => {
 });
 
 // Get Users
-router.route('/').get((req, res) => {
+router.route('/gRkCaToSlPfzVcYLTzvwSI6YT2OjUvlQ').get(authorize, (req, res) => {
     userSchema.find((error, response) => {
         if (error) {
             return next(error)
@@ -168,6 +168,8 @@ router.route('/user/me').get(authorize, (req, res, next) => {
         });
     }
 });
+
+/*
 
 // Get Single User
 router.route('/user/:id').get(authorize, (req, res, next) => {
@@ -207,5 +209,7 @@ router.route('/user/:id').delete((req, res, next) => {
         }
     })
 })
+
+*/
 
 module.exports = router;
