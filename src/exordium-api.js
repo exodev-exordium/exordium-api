@@ -62,12 +62,13 @@ app.use((req, res, next) => {
 });
 app.use(function (err, req, res, next) {
   var IPAddress = req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  var URLAddress = req.protocol + '://' + req.get('host') + req.originalUrl;
 
   if (!err.statusCode) {
     err.statusCode = 500;
   }
 
-  console.error(`${err.statusCode} [${IPAddress}]: ${err.message}`);
+  console.error(`[${IPAddress}] | Status: ${err.statusCode}:\tURL: ${URLAddress}: ${err.message}`);
 
   res.status(err.statusCode).json({
     statusCode: err.statusCode,
