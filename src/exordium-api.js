@@ -38,15 +38,15 @@ mongoose.set('useCreateIndex', true);
 // Setup the server
 const app = express();
 app.use(express.json());
-//app.use(express.urlencoded())
 app.use(cors());
 
-// Serve Static Resources
-app.use('/public', express.static('public'));
-
-// Require Routers
+// Auth Router
 const authRouter = require('./routes/auth.routes');
 app.use('/auth', authRouter);
+
+// Public Router
+const publicRouter = require('./routes/public.routes');
+app.use('/public', publicRouter);
 
 // Create server on the PORT
 const port = process.env.APP_PORT || 3000;
