@@ -2,6 +2,53 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const uniqueValidator = require('mongoose-unique-validator');
 
+// Management Page Permission Schema
+let aceessPagesPermission = new Schema({
+    page: {
+        type: String,
+        lowercase: true
+    },
+    permission: {
+        type: Boolean,
+        default: false
+    }
+})
+
+// Multiple Login Tokens Schema
+let accessToken = new Schema({
+    token: {
+        type: String
+    },
+    session: {
+        os: {
+            type: String,
+            lowercase: true
+        },
+        browser: {
+            type: String,
+            lowercase: true
+        },
+        location: {
+            country: {
+                code: {
+                    Type: String
+                },
+                name: {
+                    Type: String
+                }
+            },
+            ipAddress: {
+                type: String
+            }
+        }
+    },
+    permission: {
+        type: Boolean,
+        default: false
+    }
+})
+
+// User Data Schema
 let userSchema = new Schema({
 
     username: {
@@ -53,15 +100,15 @@ let userSchema = new Schema({
         default: 'User'
     },
     access: {
-        type: String,
-        lowercase: true,
-        default: 'user'
+        role: {
+            type: String,
+            lowercase: true,
+            enum: ['user', 'subscriber', 'beta', 'supporter', 'moderator', 'administrator', 'developer'],
+            default: 'user'
+        },
+        pages: [aceessPagesPermission]
     },
-    tokens: {
-        token: {
-            type: String
-        }
-    }
+    tokens: [accessToken]
     
 }, {
     collection: 'users'
