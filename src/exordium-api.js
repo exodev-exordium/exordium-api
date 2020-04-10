@@ -1,9 +1,7 @@
 /*
-
 Exordium API
 Author: FearGannicus <contact@exordium.dev> (https://exordium.dev)
 Date: 2020-03-16
-
 */
 
 // Modules
@@ -11,7 +9,6 @@ const dotenv = require('dotenv');
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 
 // Grab the .env configuration
 dotenv.config();
@@ -24,12 +21,13 @@ mongoose.Promise = global.Promise;
 mongoose.connect(dbConfig.db, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-}).then(() => {
+}).then(
+  () => {
     console.log('Mongodb: Connected')
-},
-    error => {
-        console.log("Mongodb: Database can't be connected: " + error)
-    }
+  },
+  error => {
+    console.log("Mongodb: Database can't be connected: " + error)
+  }
 )
 
 // Remvoe MongoDB warning error
@@ -40,13 +38,17 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// Contact Router
+const publicRouter = require('./routes/public.routes');
+app.use('/public', publicRouter);
+
 // Auth Router
 const authRouter = require('./routes/auth.routes');
 app.use('/auth', authRouter);
 
-// Public Router
-const publicRouter = require('./routes/public.routes');
-app.use('/public', publicRouter);
+// Moderation Router
+const moderationRouter = require('./routes/moderation.routes');
+app.use('/moderation', moderationRouter);
 
 // Create server on the PORT
 const port = process.env.APP_PORT || 3000;
