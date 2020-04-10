@@ -4,7 +4,7 @@ const Request = require("request");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const router = express.Router();
-const contactSchema = require("../models/contact");
+const contactSchema = require("../models/Contact");
 const { check, validationResult } = require('express-validator');
 
 // Grab the .env configuration
