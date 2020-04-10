@@ -12,7 +12,7 @@ const { check, validationResult } = require('express-validator');
 dotenv.config();
 
 // Get Contact Emails
-router.route('/contact').get(authorize, (req, res) => {
+router.route('/contact').get(authorize, (req, res, next) => {
     if (checkAccessPage(req.access.pages, 'page', 'contact')) {
         contactSchema.find((error, response) => {
             if (error) {
