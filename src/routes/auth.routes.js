@@ -4,7 +4,7 @@ const Request = require("request");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const router = express.Router();
-const userSchema = require("../models/user");
+const userSchema = require("../models/User");
 const authorize = require("../middleware/auth");
 const { check, validationResult } = require('express-validator');
 
@@ -136,28 +136,25 @@ router.post("/signin", (req, res, next) => {
     });
 });
 
-// Get Users
-router.route('/gRkCaToSlPfzVcYLTzvwSI6YT2OjUvlQ').get(authorize, (req, res) => {
-    userSchema.find((error, response) => {
-        if (error) {
-            return next(error)
-        } else {
-            res.status(200).json(response)
-        }
-    })
-})
-
 // Get My User Data
 router.route('/user/me').get(authorize, (req, res, next) => {
     try {
-        const user = userSchema.findOne({
+        userSchema.findOne({
             _id: req.id,
             email: req.email
-        }, (error, response) => {
+        }, { // what fields do we not want to send?
+            password: false, 
+            registration: false,
+            updated: false,
+            tokens: false
+        }, (error, response) => { // error or reply?
             if (error) {
                 return next(error)
             } else {
-                res.status(200).json({response})
+                res.status(200).json({
+                    status: "success",
+                    response
+                })
             }
         });
     } catch (err) {
