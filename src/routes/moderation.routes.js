@@ -30,7 +30,7 @@ router.route('/contact').get(authorize, (req, res, next) => {
 })
 
 // Get Users
-router.route('/users').get(authorize, (req, res) => {
+router.route('/users').get(authorize, (req, res, next) => {
     if (checkAccessPage(req.access.pages, 'page', 'users')) {
         userSchema.find((error, response) => {
             if (error) {
