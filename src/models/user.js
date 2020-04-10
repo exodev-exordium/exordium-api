@@ -7,10 +7,6 @@ let aceessPagesPermission = new Schema({
     page: {
         type: String,
         lowercase: true
-    },
-    permission: {
-        type: Boolean,
-        default: false
     }
 })
 
@@ -18,6 +14,13 @@ let aceessPagesPermission = new Schema({
 let accessToken = new Schema({
     token: {
         type: String
+    },
+    generated: {
+        type: Date,
+    },
+    expired: {
+        type: Date,
+        default: Date.now
     },
     session: {
         os: {
@@ -97,6 +100,7 @@ let userSchema = new Schema({
     },
     title: {
         type: String,
+        enum: ['User', 'Subscriber', 'Beta Tester', 'Community Supporter', 'Moderator', 'Administrator', 'Developer'],
         default: 'User'
     },
     access: {
