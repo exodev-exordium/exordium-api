@@ -40,7 +40,9 @@ router.post("/register",
     (req, res, next) => {
         const errors = validationResult(req);
         const ipAddress = req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-        console.log(req.body);
+        var URLAddress = req.protocol + '://' + req.get('host') + req.originalUrl;
+
+        console.log(`[${ipAddress}] | URL: ${URLAddress}`);
 
         if (!errors.isEmpty()) {
             return res.status(422).jsonp(errors.array());
@@ -61,6 +63,7 @@ router.post("/register",
                             username: req.body.username,
                             email: req.body.email,
                             password: hash,
+                            realname: req.body.realname || undefined,
                             registration: {
                                 country: {
                                     code: req.body.country.code,
@@ -73,7 +76,15 @@ router.post("/register",
                                 ipAddress: ipAddress,
                                 updatedAt: new Date().now
                             },
-                            realname: req.body.realname || undefined,
+                            title: 'User',
+                            access: {
+                                roles: [
+                                    {
+                                        role: "user"
+                                    }
+                                ],
+                                pages: []
+                            }
                         });
                         user.save().then((response) => {
                             res.status(201).json({
@@ -98,6 +109,8 @@ router.post("/register",
 // Sign-in
 router.post("/signin", (req, res, next) => {
     let getUser;
+    const ipAddress = req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
     userSchema.findOne({
         email: req.body.email
     }).then(user => {
@@ -138,6 +151,11 @@ router.post("/signin", (req, res, next) => {
 
 // Get My User Data
 router.route('/user/me').get(authorize, (req, res, next) => {
+    const ipAddress = req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    var URLAddress = req.protocol + '://' + req.get('host') + req.originalUrl;
+
+    console.log(`[${ipAddress}] | URL: ${URLAddress} | Email: ${req.email}`);
+
     try {
         userSchema.findOne({
             _id: req.id,
