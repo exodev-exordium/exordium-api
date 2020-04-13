@@ -2,7 +2,17 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const uniqueValidator = require('mongoose-unique-validator');
 
-// Management Page Permission Schema
+// Access Roles
+let accessRoles = new Schema({
+    role: {
+        type: String,
+        lowercase: true,
+        enum: ['user', 'subscriber', 'beta', 'supporter', 'moderator', 'administrator', 'developer'],
+        default: 'user'
+    }
+})
+
+// Access Page Permission Schema
 let aceessPagesPermission = new Schema({
     page: {
         type: String,
@@ -104,12 +114,7 @@ let userSchema = new Schema({
         default: 'User'
     },
     access: {
-        role: {
-            type: String,
-            lowercase: true,
-            enum: ['user', 'subscriber', 'beta', 'supporter', 'moderator', 'administrator', 'developer'],
-            default: 'user'
-        },
+        roles: [accessRoles],
         pages: [aceessPagesPermission]
     },
     tokens: [accessToken]
