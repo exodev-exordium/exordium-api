@@ -166,6 +166,7 @@ router.route('/user/me').get(authorize, (req, res, next) => {
     }
 });
 
+/*
 // Get Single User
 router.route('/user/:id').get(authorize, (req, res, next) => {
     userSchema.findById(req.params.id, (error, data) => {
@@ -179,7 +180,6 @@ router.route('/user/:id').get(authorize, (req, res, next) => {
     })
 })
 
-/*
 // Update User
 router.route('/user/:id').put((req, res, next) => {
     userSchema.findByIdAndUpdate(req.params.id, {
