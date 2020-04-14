@@ -46,6 +46,10 @@ app.use('/public', publicRouter);
 const authRouter = require('./routes/auth.routes');
 app.use('/auth', authRouter);
 
+// User Router
+const userRouter = require('./routes/user.routes');
+app.use('/user', userRouter);
+
 // Moderation Router
 const moderationRouter = require('./routes/moderation.routes');
 app.use('/moderation', moderationRouter);
