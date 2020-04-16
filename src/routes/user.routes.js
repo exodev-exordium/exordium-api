@@ -11,8 +11,8 @@ const { check, validationResult } = require('express-validator');
 // Grab the .env configuration
 dotenv.config();
 
-// Get My User Data
-router.route('/me').get(authorize, (req, res, next) => {
+// Basic User Data
+router.route('/me/basic').get(authorize, (req, res, next) => {
     try {
         userSchema.findOne({
             _id: req.id,
@@ -23,6 +23,59 @@ router.route('/me').get(authorize, (req, res, next) => {
             updated: false,
             tokens: false
         }, (error, response) => { // error or reply?
+            if (error) {
+                return next(error)
+            } else {
+                res.status(200).json({
+                    status: "success",
+                    response
+                })
+            }
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(401).json({
+            status: "error",
+            message: "Authentication failed"
+        });
+    }
+});
+
+// Basic User Data
+router.route('/me/advanced').get(authorize, (req, res, next) => {
+    try {
+        userSchema.findOne({
+            _id: req.id,
+            email: req.email
+        }, { // what fields do we not want to send?
+            password: false, 
+            tokens: false
+        }, (error, response) => { // error or reply?
+            if (error) {
+                return next(error)
+            } else {
+                res.status(200).json({
+                    status: "success",
+                    response
+                })
+            }
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(401).json({
+            status: "error",
+            message: "Authentication failed"
+        });
+    }
+});
+
+// User Tokens
+router.route('/me/tokens').get(authorize, (req, res, next) => {
+    try {
+        userSchema.findOne({
+            _id: req.id,
+            email: req.email
+        }).select('tokens', (error, response) => { // error or reply?
             if (error) {
                 return next(error)
             } else {
