@@ -94,6 +94,20 @@ router.route('/me/tokens').get(authorize, (req, res, next) => {
     }
 });
 
+// Discord Connection
+router.route('/me/connection/discord').get(authorize, (req, res, next) => {
+
+});
+
+router.route('/me/connection/discord/callback').get(authorize, (req, res, next) => {
+    
+});
+
+// Github Connection
+router.route('/me/connection/github').get(authorize, (req, res, next) => {
+
+});
+
 /*
 // Get Single User
 router.route('/user/:id').get(authorize, (req, res, next) => {

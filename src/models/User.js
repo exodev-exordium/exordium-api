@@ -2,6 +2,44 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const uniqueValidator = require('mongoose-unique-validator');
 
+// Github Connection
+let connectionGithub = new Schema({
+    id: {
+        type: String,
+    },
+    token: {
+        type: String
+    },
+    username: {
+        type: String
+    },
+    discriminator: {
+        type: String
+    },
+    avatar: {
+        type: String
+    }
+});
+
+// Discord Connection
+let connectionDiscord = new Schema({
+    id: {
+        type: String,
+    },
+    token: {
+        type: String
+    },
+    username: {
+        type: String
+    },
+    discriminator: {
+        type: String
+    },
+    avatar: {
+        type: String
+    }
+});
+
 // Access Roles
 let accessRoles = new Schema({
     role: {
@@ -117,7 +155,11 @@ let userSchema = new Schema({
         roles: [accessRoles],
         pages: [aceessPagesPermission]
     },
-    tokens: [accessToken]
+    tokens: [accessToken],
+    connections: {
+        discord: [connectionDiscord],
+        github: [connectionGithub]
+    }
     
 }, {
     collection: 'users'
