@@ -2,7 +2,7 @@
 
 *Developed by the Exordium Development Team*
 
-This project was originally started using `Apollo GraphQL` but we ran into too many issues with the mobile app, and desktop application integration and decided it would be in our best interest to just use a plain and simple REST API.
+This project was originally started using `Apollo GraphQL` but we ran into too many issues with the mobile app, and desktop application integration and decided it would be in our best interest to just use a plain and simple REST API. *We might decide to change the project from javascript to typescript in the future*.
 
 ## Prelude
 
@@ -13,19 +13,23 @@ We hope to share as much of our programming as open source code to help others c
 ## API
 
 The current features that are in the works for the system;
-- [ ] Authentication
-  - [ ] token
-    - [ ] get: shows the current token (if there is one valid)
-    - [ ] post:
-- [ ] User Management
-  - [ ] me (Returns currently signed in user information)
-  - [ ] connect
-    - [ ] get: lists all current sessions
-    - [ ] post: adds another connected session
-    - [ ] put: updates an already existing session (with last connected times)
-    - [ ] delete: remove an expired session
-- [ ] Server Management
-- [ ] Blog/Post Management
+- [x] Public
+  - [x] Contact requests
+- [x] Authentication
+  - [x] Register
+  - [x] Sign in
+- [x] User
+  - [x] Basic Info
+  - [x] Advanced Info
+  - [ ] Session Tokens
+  - [ ] Connections
+    - [ ] Discord
+    - [ ] Github
+- [ ] Moderation
+  - [ ] Contact requests
+  - [ ] Users Management
+  - [ ] Server Management
+  - [ ] Blog/Post Management
 
 ## Issues/Suggestions
 
@@ -43,7 +47,6 @@ If you want to send us an email, regarding any issue, you can send an email to:
 
 The following contributors have either helped to start this project, contributed code, or are actively maintaining it (including documentation, and creating issues), or are in some other way being awesome contributors to this project and we would like to take a moment to recognize them.
 
-[<img src="https://github.com/FriedOctopus.png?size=72" alt="FriedOctopus" width="72">](https://github.com/FriedOctopus)
 [<img src="https://github.com/BradOnDex.png?size=72" alt="BradOnDex" width="72">](https://github.com/BradOnDex)
 
 The Exordium development team:
