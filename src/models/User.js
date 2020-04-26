@@ -29,6 +29,9 @@ let connectionDiscord = new Schema({
     token: {
         type: String
     },
+    email: {
+        type: String
+    },
     username: {
         type: String
     },
@@ -67,8 +70,7 @@ let accessToken = new Schema({
         type: Date,
     },
     expired: {
-        type: Date,
-        default: Date.now
+        type: Date
     },
     session: {
         os: {
