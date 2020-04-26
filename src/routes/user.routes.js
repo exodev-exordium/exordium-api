@@ -99,10 +99,6 @@ router.route('/me/connection/discord').get(authorize, (req, res, next) => {
 
 });
 
-router.route('/me/connection/discord/callback').get(authorize, (req, res, next) => {
-    
-});
-
 // Github Connection
 router.route('/me/connection/github').get(authorize, (req, res, next) => {
 
