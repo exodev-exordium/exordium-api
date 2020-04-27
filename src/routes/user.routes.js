@@ -109,8 +109,6 @@ router.route('/me/connection/discord').post(
     (req, res, next) => {
         try {
             oauth.getUser(req.body.access_token).then((response) => {
-                // We got the user!
-                console.log(response)
 
                 oauth.addMember({
                     accessToken: req.body.access_token,
@@ -118,7 +116,11 @@ router.route('/me/connection/discord').post(
                     guildId: process.env.DISCORD_GUILD_ID,
                     userId: response.id,
                     roles: [process.env.DISCORD_ROLE_USER],
-                }).then(console.log);
+                }).then((response) => {
+                    console.log(response);
+                }).catch((err) => {
+                    console.error(err);
+                });
 
                 userSchema.updateOne({
                     _id: req.id,
@@ -134,9 +136,8 @@ router.route('/me/connection/discord').post(
                             premium_type: response.premium_type
                         }
                     }
-                },
-                {
-                    upsert: true
+                }, { 
+                    upsert: true 
                 }).then((result) => {
                     res.status(201).json({
                         status: "success",
