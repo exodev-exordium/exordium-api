@@ -127,11 +127,11 @@ router.route('/me/connection/discord').post(
                     $set: {
                         'connections.discord': {
                             id: response.id,
-                            token: response.token,
                             email: response.email,
                             username: response.username,
                             discriminator: response.discriminator,
-                            avatar: response.avatar
+                            avatar: response.avatar,
+                            premium_type: response.premium_type
                         }
                     }
                 },
