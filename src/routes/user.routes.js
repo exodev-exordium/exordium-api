@@ -120,7 +120,7 @@ router.route('/me/connection/discord').post(
                     roles: [process.env.DISCORD_ROLE_USER],
                 }).then(console.log);
 
-                userSchema.findOneAndUpdate({
+                userSchema.update({
                     _id: req.id,
                     email: req.email
                 }, {
