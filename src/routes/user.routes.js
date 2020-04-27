@@ -108,25 +108,39 @@ router.route('/me/connection/discord').post(
     ], 
     (req, res, next) => {
         try {
-            oauth.getUser(req.body.access_token).then(console.log);
-            /*
-            userSchema.findOneAndUpdate({
-                _id: req.id,
-                email: req.email
-            }, {
-                $set: {
-                    'connections.discord': {
-                        id: '',
-                        token: '',
-                        email: '',
-                        username: '',
-                        discriminator: '',
-                        avatar: ''
-                    }
-                },
-                new: true
+            oauth.getUser(req.body.access_token).then((response) => {
+                // We got the user!
+                console.log(response)
+                res.status(201).json({
+                    status: "success",
+                    message: "User successfully created!",
+                    result: response
+                });
+
+                /*
+                userSchema.findOneAndUpdate({
+                    _id: req.id,
+                    email: req.email
+                }, {
+                    $set: {
+                        'connections.discord': {
+                            id: '',
+                            token: '',
+                            email: '',
+                            username: '',
+                            discriminator: '',
+                            avatar: ''
+                        }
+                    },
+                    new: true
+                });
+                */
+            }).catch (error => {
+                res.status(500).json({
+                    status: "error",
+                    error: error
+                });
             });
-            */
         } catch (err) {
             console.error(err);
             return res.status(401).json({
