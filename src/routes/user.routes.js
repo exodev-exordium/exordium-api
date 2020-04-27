@@ -99,7 +99,7 @@ router.route('/me/tokens').get(authorize, (req, res, next) => {
 });
 
 // Discord Connection
-router.post('/me/connection/discord').get(
+router.route('/me/connection/discord').post(
     [
         authorize,
         check('token', 'Discord access token must be provided.')
@@ -138,7 +138,7 @@ router.post('/me/connection/discord').get(
 );
 
 // Github Connection
-router.post('/me/connection/github').get(authorize, (req, res, next) => {
+router.route('/me/connection/github').post(authorize, (req, res, next) => {
     try {
 
     } catch (err) {
