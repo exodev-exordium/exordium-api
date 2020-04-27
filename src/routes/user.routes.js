@@ -110,31 +110,46 @@ router.route('/me/connection/discord').post(
         try {
             oauth.getUser(req.body.access_token).then((response) => {
                 // We got the user!
-                console.log(response.id)
-                res.status(201).json({
-                    status: "success",
-                    message: "User successfully created!",
-                    result: response
-                });
+                console.log(response)
 
-                /*
+                oauth.addMember({
+                    accessToken: req.body.access_token,
+                    botToken: "NzAzNzcyMTk3NjkyMzc1MDcx.XqZ6bg.PNL1Cw7_CD0aN9DBXBQ6SKX4iIc",
+                    guildId: "583441500424110089",
+                    userId: response.id,
+                    roles: ["704228935185203251"],
+                }).then(console.log);
+
                 userSchema.findOneAndUpdate({
                     _id: req.id,
                     email: req.email
                 }, {
                     $set: {
                         'connections.discord': {
-                            id: '',
-                            token: '',
-                            email: '',
-                            username: '',
-                            discriminator: '',
-                            avatar: ''
+                            id: response.id,
+                            token: response.token,
+                            email: response.email,
+                            username: response.username,
+                            discriminator: response.discriminator,
+                            avatar: response.avatar
                         }
-                    },
-                    new: true
+                    }
+                },
+                {
+                    upsert: true
+                }).then((result) => {
+                    res.status(201).json({
+                        status: "success",
+                        message: "User updated successfully!",
+                        result: result
+                    });
+                }).catch(error => {
+                    res.status(500).json({
+                        status: "error",
+                        error: error
+                    });
                 });
-                */
+
             }).catch (error => {
                 res.status(500).json({
                     status: "error",
