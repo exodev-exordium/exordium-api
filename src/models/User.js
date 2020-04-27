@@ -122,9 +122,6 @@ let userSchema = new Schema({
             id: {
                 type: String,
             },
-            token: {
-                type: String
-            },
             email: {
                 type: String
             },
@@ -136,6 +133,9 @@ let userSchema = new Schema({
             },
             avatar: {
                 type: String
+            },
+            premium_type: {
+                type: Number
             }
         },
         //github: [connectionGithub]
