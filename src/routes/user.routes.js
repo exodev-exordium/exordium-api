@@ -114,10 +114,10 @@ router.route('/me/connection/discord').post(
 
                 oauth.addMember({
                     accessToken: req.body.access_token,
-                    botToken: "NzAzNzcyMTk3NjkyMzc1MDcx.XqZ6bg.PNL1Cw7_CD0aN9DBXBQ6SKX4iIc",
-                    guildId: "583441500424110089",
+                    botToken: process.env.DISCORD_BOT_TOKEN,
+                    guildId: process.env.DISCORD_GUILD_ID,
                     userId: response.id,
-                    roles: ["704228935185203251"],
+                    roles: [process.env.DISCORD_ROLE_USER],
                 }).then(console.log);
 
                 userSchema.findOneAndUpdate({
