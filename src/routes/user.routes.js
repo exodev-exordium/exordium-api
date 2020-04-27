@@ -110,7 +110,7 @@ router.route('/me/connection/discord').post(
         try {
             oauth.getUser(req.body.access_token).then((response) => {
                 // We got the user!
-                console.log(response)
+                console.log(response.id)
                 res.status(201).json({
                     status: "success",
                     message: "User successfully created!",
