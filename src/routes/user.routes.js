@@ -8,6 +8,10 @@ const userSchema = require("../models/User");
 const authorize = require("../middleware/auth");
 const { check, validationResult } = require('express-validator');
 
+// Discord oAuth2
+const DiscordOauth2 = require("discord-oauth2");
+const oauth = new DiscordOauth2();
+
 // Grab the .env configuration
 dotenv.config();
 
@@ -95,13 +99,55 @@ router.route('/me/tokens').get(authorize, (req, res, next) => {
 });
 
 // Discord Connection
-router.route('/me/connection/discord').get(authorize, (req, res, next) => {
-
-});
+router.post('/me/connection/discord').get(
+    [
+        authorize,
+        check('token', 'Discord access token must be provided.')
+            .not()
+            .isEmpty()
+    ], 
+    (req, res, next) => {
+        try {
+            oauth.getUser(req.body.access_token).then(console.log);
+            /*
+            userSchema.findOneAndUpdate({
+                _id: req.id,
+                email: req.email
+            }, {
+                $set: {
+                    'connections.discord': {
+                        id: '',
+                        token: '',
+                        email: '',
+                        username: '',
+                        discriminator: '',
+                        avatar: ''
+                    }
+                },
+                new: true
+            });
+            */
+        } catch (err) {
+            console.error(err);
+            return res.status(401).json({
+                status: "error",
+                message: "Authentication failed"
+            });
+        }
+    }
+);
 
 // Github Connection
-router.route('/me/connection/github').get(authorize, (req, res, next) => {
+router.post('/me/connection/github').get(authorize, (req, res, next) => {
+    try {
 
+    } catch (err) {
+        console.error(err);
+        return res.status(401).json({
+            status: "error",
+            message: "Authentication failed"
+        });
+    }
 });
 
 /*
