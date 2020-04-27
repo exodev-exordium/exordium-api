@@ -103,8 +103,8 @@ router.post("/register",
             });
 
         }
-    });
-
+    }
+);
 
 // Sign-in
 router.post("/signin", (req, res, next) => {
