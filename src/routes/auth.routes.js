@@ -109,7 +109,10 @@ router.post("/register",
 // Sign-in
 router.post("/signin", (req, res, next) => {
     let getUser;
+    
     const ipAddress = req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    var URLAddress = req.protocol + '://' + req.get('host') + req.originalUrl;
+    console.log(`[${ipAddress}] | URL: ${URLAddress}`);
 
     userSchema.findOne({
         email: req.body.email
