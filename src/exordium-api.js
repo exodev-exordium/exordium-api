@@ -1,6 +1,6 @@
 /*
 Exordium API
-Author: FearGannicus <contact@exordium.dev> (https://exordium.dev)
+Author: FearGannicus <gannicus@exordium.dev> (https://exordium.dev)
 Date: 2020-03-16
 */
 
