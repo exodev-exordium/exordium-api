@@ -142,7 +142,8 @@ router.post("/signin", (req, res, next) => {
             status: "success",
             token: jwtToken,
             expiresIn: 7200,
-            _id: getUser._id
+            _id: getUser._id,
+            username: getUser.username
         });
     }).catch(err => {
         return res.status(401).json({
