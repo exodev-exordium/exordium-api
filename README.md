@@ -1,18 +1,17 @@
 # Exordium (Rest API)
 
-*Developed by the Exordium Development Team*
-
-This project was originally started using `Apollo GraphQL` but we ran into too many issues with the mobile app, and desktop application integration and decided it would be in our best interest to just use a plain and simple REST API. *We might decide to change the project from javascript to typescript in the future*.
-
+The Exordium API is used for https://exordium.org/ and https://clients.exordium.org/ and the respective desktop and mobile apps as well. 
 ## Prelude
 
 Exordium is a virtual private networking software in the works. **Our goal is to donate all profits made from the VPN towards environmental protection, and to fight against the climate crisis.**
 
 We hope to share as much of our programming as open source code to help others create their own projects and further the development of software built with `electronjs` and `nodejs`, which are the fundamental pieces to us.
 
-## API
+## API Progress
 
-The current features that are in the works for the system;
+Currently the API is designed using nodejs and expressjs, however we are currently planning on translating the project into typescript so it matches with our file formats for our other projects.
+
+At the current moment our `js` api has the following progress completed;
 - [x] Public
   - [x] Contact requests
 - [x] Authentication
@@ -23,10 +22,10 @@ The current features that are in the works for the system;
   - [x] Advanced Info
   - [ ] Session Tokens
   - [ ] Connections
-    - [ ] Discord
+    - [x] Discord
     - [ ] Github
 - [ ] Moderation
-  - [ ] Contact requests
+  - [x] Contact requests
   - [ ] Users Management
   - [ ] Server Management
   - [ ] Blog/Post Management
@@ -51,6 +50,6 @@ The following contributors have either helped to start this project, contributed
 
 The Exordium development team:
 
-[<img src="https://github.com/tvOdyssey.png?size=72" alt="tvOdyssey" width="72">](https://github.com/tvOdyssey)
+[<img src="https://github.com/FearGannicus.png?size=72" alt="FearGannicus" width="72">](https://github.com/FearGannicus)
 [<img src="https://github.com/InvalidEm.png?size=72" alt="InvalidEm" width="72">](https://github.com/InvalidEm)
 [<img src="https://github.com/shuZro.png?size=72" alt="shuZro" width="72">](https://github.com/shuZro)
