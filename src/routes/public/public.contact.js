@@ -3,7 +3,7 @@ const express = require("express");
 const Request = require("request");
 const router = express.Router();
 
-const contactSchema = require("../models/Contact");
+const contactSchema = require("../../models/Contact");
 
 const { check, validationResult } = require('express-validator');
 
@@ -11,7 +11,7 @@ const { check, validationResult } = require('express-validator');
 dotenv.config();
 
 // Recaptcha
-const { recaptchaApi, recaptchaSecret } = require('../variables/recpatcha.js');
+const { recaptchaApi, recaptchaSecret } = require('../../variables/recpatcha.js');
 
 // Contact Request
 router.post("/",
