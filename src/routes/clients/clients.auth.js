@@ -12,7 +12,7 @@ const userSchema = require("../../models/User");
 dotenv.config();
 
 // Recaptcha
-const { recaptchaApi, recaptchaSecret } = require('../../variables/recpatcha.js');
+const { recaptchaApi, recaptchaSecret } = require('../../variables/recaptcha');
 
 // Sign-up
 router.post("/register",

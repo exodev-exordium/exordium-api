@@ -11,7 +11,7 @@ const { check, validationResult } = require('express-validator');
 dotenv.config();
 
 // Recaptcha
-const { recaptchaApi, recaptchaSecret } = require('../../variables/recpatcha.js');
+const { recaptchaApi, recaptchaSecret } = require('../../variables/recaptcha');
 
 // Contact Request
 router.post("/",
