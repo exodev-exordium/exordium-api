@@ -12,23 +12,33 @@ We hope to share as much of our programming as open source code to help others c
 Currently the API is designed using nodejs and expressjs, however we are currently planning on translating the project into typescript so it matches with our file formats for our other projects.
 
 At the current moment our `js` api has the following progress completed;
-- [x] Public
-  - [x] Contact requests
-- [x] Authentication
-  - [x] Register
-  - [x] Sign in
-- [x] User
-  - [x] Basic Info
-  - [x] Advanced Info
-  - [ ] Session Tokens
-  - [ ] Connections
-    - [x] Discord
-    - [ ] Github
-- [ ] Moderation
-  - [x] Contact requests
-  - [ ] Users Management
-  - [ ] Server Management
-  - [ ] Blog/Post Management
+- [x] `/public` - for general public requests
+  - [x] `/contact` - allows general public to send us contact requests
+  - [ ] `/blog` - allows general public to access our blog posts
+  - [ ] `/servers` - allows general public to access our servers directory
+- [x] `/auth` - allows clients to authenticate themselves
+  - [x] `/register` - allows client to register their account with us
+  - [x] `/signin` - allows client to sign into their account
+  - [ ] `/forgotten-pass` - allows a user to reset their password
+  - [ ] `/unlock` - if a user gets logged out of their account for idling, this would regrant them access.
+- [x] `/user/me` - access your own accounts data
+  - [x] `/basic` - basic account info
+  - [x] `/advanced` - advanced account info
+  - [ ] `/tokens` - users current session tokens
+  - [ ] `/connections` - allows 3rd party connections
+    - [x] `/discord` - discord connection
+    - [ ] `/github` - github connection
+- [ ] `/management` - service management section
+  - [x] `/contact` - shows all contact requests received
+  - [ ] `/watchdog` - returns back current site activity for the last (x) time.
+  - [x] `/users` - user management (shows all users)
+    - [ ] `:id` - shows specific user data
+  - [ ] `/servers` - server management (shows all servers)
+    - [ ] `/:id` - shows specific server data
+  - [ ] `/blogs` - blog management (shows all blog posts)
+    - [ ] `/:id` - shows specific blog data
+  - [ ] `/devblog` - dev blog management (shows all dev blog posts)
+    - [ ] `/:id` - shows specific dev blog 
 
 ## Issues/Suggestions
 
