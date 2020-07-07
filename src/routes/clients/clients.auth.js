@@ -6,13 +6,13 @@ const bcrypt = require("bcrypt");
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 
-const userSchema = require("../models/User");
+const userSchema = require("../../models/User");
 
 // Grab the .env configuration
 dotenv.config();
 
 // Recaptcha
-const { recaptchaApi, recaptchaSecret } = require('../variables/recpatcha.js');
+const { recaptchaApi, recaptchaSecret } = require('../../variables/recpatcha.js');
 
 // Sign-up
 router.post("/register",

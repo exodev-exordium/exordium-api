@@ -2,8 +2,8 @@ const dotenv = require('dotenv');
 const express = require("express");
 const router = express.Router();
 
-const contactSchema = require('../models/Contact');
-const authorize = require("../middleware/auth");
+const contactSchema = require('../../models/Contact');
+const authorize = require("../../middleware/auth");
 
 // Grab the .env configuration
 dotenv.config();

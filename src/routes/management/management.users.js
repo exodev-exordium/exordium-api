@@ -2,8 +2,8 @@ const dotenv = require('dotenv');
 const express = require("express");
 const router = express.Router();
 
-const userSchema = require("../models/User");
-const authorize = require("../middleware/auth");
+const userSchema = require("../../models/User");
+const authorize = require("../../middleware/auth");
 
 // Grab the .env configuration
 dotenv.config();
