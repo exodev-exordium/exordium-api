@@ -23,10 +23,10 @@ mongoose.connect(dbConfig.db, {
     useUnifiedTopology: true
 }).then(
   () => {
-    console.log('Mongodb: Connected')
+    console.log('Mongodb: Connected');
   },
   error => {
-    console.log("Mongodb: Database can't be connected: " + error)
+    console.log("Mongodb: Database can't be connected: " + error);
   }
 )
 
@@ -42,6 +42,12 @@ app.use(cors());
 // Contact Router
 const publicContact = require('./routes/public/public.contact');
 app.use('/public/contact', publicContact);
+// Contact Router
+//const publicBlog = require('./routes/public/public.blog');
+//app.use('/public/blog', publicBlog);
+// Contact Router
+//const publicServers = require('./routes/public/public.servers');
+//app.use('/public/servers', publicServers);
 
 
 // Client Auth Routers
