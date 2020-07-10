@@ -25,7 +25,7 @@ router.route('/').get(authorize, (req, res, next) => {
             message: "Not authorized to access this resource" 
         });
     }
-})
+});
 
 // Get Single User
 router.route('/:id').get(authorize, (req, res, next) => {
@@ -43,6 +43,6 @@ router.route('/:id').get(authorize, (req, res, next) => {
             message: "Not authorized to access this resource" 
         });
     }
-})
+});
 
 module.exports = router;
