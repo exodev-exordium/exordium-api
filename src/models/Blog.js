@@ -18,6 +18,10 @@ let blogSchema = new Schema({
             type: String
         }
     },
+    url: {
+        type: String,
+        lowercase: true
+    },
     updated: {
         person: {
             id: {
