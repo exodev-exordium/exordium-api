@@ -4,13 +4,14 @@ const router = express.Router();
 
 const contactSchema = require('../../models/Contact');
 const authorize = require("../../middleware/auth");
+const checkAccessPage = require("../../variables/check-access");
 
 // Grab the .env configuration
 dotenv.config();
 
 // Get Contact Emails
 router.route('/').get(authorize, (req, res, next) => {
-    if (checkAccessPage(req.access.pages, 'page', 'contact-overview')) {
+    if (checkAccessPage(req.access.pages, 'contact-overview')) {
         contactSchema.find((error, response) => {
             if (error) {
                 return next(error)
@@ -25,9 +26,5 @@ router.route('/').get(authorize, (req, res, next) => {
         });
     }
 })
-
-function checkAccessPage (array, key, value) {
-    return array.some(object => object[key] === value);
-}
 
 module.exports = router;
