@@ -2,9 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let signinLogSchema = new Schema({
-    username: {
-        type: String,
-        lowercase: true
+    person: {
+        id: {
+            type: String,
+        },
+        email: {
+            type: String,
+            lowercase: true
+        },
     },
     logged: {
         ipAddress: {
