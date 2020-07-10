@@ -10,7 +10,7 @@ let accessRoles = new Schema({
         enum: ['user', 'subscriber', 'beta', 'supporter', 'moderator', 'administrator', 'developer'],
         default: 'user'
     }
-})
+});
 
 // Access Page Permission Schema
 let aceessPagesPermission = new Schema({
@@ -18,7 +18,7 @@ let aceessPagesPermission = new Schema({
         type: String,
         lowercase: true
     }
-})
+});
 
 // Multiple Login Tokens Schema
 let accessToken = new Schema({
@@ -58,7 +58,7 @@ let accessToken = new Schema({
         type: Boolean,
         default: false
     }
-})
+});
 
 // User Data Schema
 let userSchema = new Schema({
@@ -143,10 +143,10 @@ let userSchema = new Schema({
     
 }, {
     collection: 'users'
-})
+});
 
 userSchema.plugin(uniqueValidator, { 
     message: 'Email already in use.' 
 });
 
-module.exports = mongoose.model('User', userSchema)
+module.exports = mongoose.model('User', userSchema);
