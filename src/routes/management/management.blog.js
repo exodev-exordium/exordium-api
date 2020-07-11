@@ -2,6 +2,7 @@ const dotenv = require('dotenv');
 const express = require("express");
 const router = express.Router();
 const Request = require("request");
+const { check, validationResult } = require('express-validator');
 
 const blogSchema = require('../../models/Blog');
 const authorize = require("../../middleware/auth");
