@@ -17,7 +17,7 @@ let blogSchema = new Schema({
     },
     updated: {
         person: {
-            type: ObjectId(),
+            type: ObjectId,
         },
         updatedAt: {
             type: Date,
@@ -26,7 +26,7 @@ let blogSchema = new Schema({
     },
     created: {
         person: {
-            type: ObjectId(),
+            type: ObjectId,
         },
         createdAt: {
             type: Date,
