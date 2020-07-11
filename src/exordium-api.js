@@ -1,6 +1,6 @@
 /*
 Exordium API
-Author: FearGannicus <gannicus@exordium.dev> (https://exordium.dev)
+Author: FearGannicus <gannicus@exordium.org> (https://exordium.dev)
 Date: 2020-03-16
 */
 
@@ -42,10 +42,10 @@ app.use(cors());
 // Contact Router
 const publicContact = require('./routes/public/public.contact');
 app.use('/public/contact', publicContact);
-// Contact Router
-//const publicBlog = require('./routes/public/public.blog');
-//app.use('/public/blog', publicBlog);
-// Contact Router
+// Blog Router
+const publicBlog = require('./routes/public/public.blog');
+app.use('/public/blog', publicBlog);
+// Servers Router
 //const publicServers = require('./routes/public/public.servers');
 //app.use('/public/servers', publicServers);
 
@@ -68,8 +68,8 @@ app.use('/management/contact', managementContact);
 const managementUsers = require('./routes/management/management.users');
 app.use('/management/users', managementUsers);
 // Management Blogs Routers
-//const managementBlogs = require('./routes/management/management.blog');
-//app.use('/management/blogs', managementBlogs);
+const managementBlogs = require('./routes/management/management.blog');
+app.use('/management/blogs', managementBlogs);
 // Management Dev Blog Routers
 //const managementDevBlog = require('./routes/management/management.devblog');
 //app.use('/management/devblog', managementDevBlog);
