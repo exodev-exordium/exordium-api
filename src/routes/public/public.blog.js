@@ -11,9 +11,7 @@ dotenv.config();
 router.route('/').get((req, res, next) => {
     try {
         blogSchema.find({}, { // what fields do we not want to send?
-            updated: false,
-            'created.person.email': false,
-            'created.ipAddress': false
+            updated: false
         }, (error, response) => { // error or reply?
             if (error) {
                 return next(error)
@@ -38,9 +36,7 @@ router.route('/:id').get((req, res, next) => {
         blogSchema.findOne({
             url: req.params.url
         }, { // what fields do we not want to send?
-            updated: false,
-            'created.person.email': false,
-            'created.ipAddress': false
+            updated: false
         }, (error, response) => { // error or reply?
             if (error) {
                 return next(error)
