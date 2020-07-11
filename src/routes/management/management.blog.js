@@ -83,21 +83,11 @@ router.route('/add').post([
                 return res.status(422).jsonp({"status": "error", "message": "Captcha Validation failed"});
             } else {
                 const post = new blogSchema({
-                    header: {
-                        title: req.body.header.title,
-                        subtitle: req.body.header.subtitle,
-                    },
-                    body: {
-                        short: req.body.body.short,
-                        long: req.body.body.long
-                    },
+                    title: req.body.title,
+                    body: req.body.body,
                     url: req.body.url,
                     created: {
-                        person: {
-                            id: req.id,
-                            email: req.email,
-                        },
-                        ipAddress: ipAddress,
+                        person: req.id,
                         createdAt: new Date().now
                     }
                 });
