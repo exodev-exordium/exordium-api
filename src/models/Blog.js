@@ -2,38 +2,22 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let blogSchema = new Schema({
-    header: {
-        title: {
-            type: String
-        },
-        subtitle: {
-            type: String
-        }
+    title: {
+        type: String
     },
     body: {
-        short: {
-            type: String
-        },
-        long: {
-            type: String
-        }
+        type: String
     },
     url: {
         type: String,
         lowercase: true
     },
+    disabled: {
+        type: Boolean
+    },
     updated: {
         person: {
-            id: {
-                type: String,
-            },
-            email: {
-                type: String,
-                lowercase: true
-            },
-        },
-        ipAddress: {
-            type: String
+            type: String,
         },
         updatedAt: {
             type: Date,
@@ -42,16 +26,7 @@ let blogSchema = new Schema({
     },
     created: {
         person: {
-            id: {
-                type: String,
-            },
-            email: {
-                type: String,
-                lowercase: true
-            },
-        },
-        ipAddress: {
-            type: String
+            type: String,
         },
         createdAt: {
             type: Date,
