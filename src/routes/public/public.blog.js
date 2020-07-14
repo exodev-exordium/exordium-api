@@ -11,32 +11,28 @@ dotenv.config();
 router.route('/').get((req, res, next) => {
     try {
 
-        /*
-
-        https://docs.mongodb.com/manual/reference/operator/aggregation/lookup/
-        https://stackoverflow.com/questions/38799395/get-data-from-multiple-collections-in-mongoose
-        https://stackoverflow.com/questions/35583569/mongodb-aggregation-with-lookup-limit-some-fields-to-return-from-query
-        https://mongoosejs.com/docs/populate.html
-        https://stackoverflow.com/questions/36805784/how-to-join-two-collections-in-mongoose
-
-        blogSchema.aggregate([{
-            $lookup: {
-                from: "blog", // collection name in db
-                localField: "_id",
-                foreignField: "student",
-                as: "worksnapsTimeEntries"
+        blogSchema.aggregate([
+            {
+                "$lookup": {
+                    "from": "users", // collection name in db
+                    "localField": "created.person",
+                    "foreignField": "_id",
+                    "as": "author"
+                }
+            }, {
+                "$unwind": "$author"
+            }, {
+                "$project": {
+                    "_id": 1,
+                    "title": 1,
+                    "body": 1,
+                    "url": 1,
+                    "created": 1,
+                    "author.username": 1,
+                    "author.title": 1
+                }
             }
-        }]).exec(function(err, students) {
-            // students contain WorksnapsTimeEntries
-        });
-
-        */
-        
-        blogSchema.find({
-            // find everything
-        }, { 
-            updated: false //remove updated information
-        }, (error, response) => {
+        ], (error, response) => {
             if (error) {
                 return next(error)
             } else {
@@ -45,6 +41,7 @@ router.route('/').get((req, res, next) => {
         }).sort({
             _id: -1
         }).limit(5);
+        
     } catch (err) {
         console.error(err);
         return res.status(200).json({
@@ -57,11 +54,33 @@ router.route('/').get((req, res, next) => {
 // Get Last Blogs
 router.route('/:id').get((req, res, next) => {
     try {
-        blogSchema.findOne({
-            url: req.params.url
-        }, { // what fields do we not want to send?
-            updated: false
-        }, (error, response) => { // error or reply?
+
+        blogSchema.aggregate([
+            {
+                "$match": {
+                    "url": req.params.id
+                }
+            }, {
+                "$lookup": {
+                    "from": "users", // collection name in db
+                    "localField": "created.person",
+                    "foreignField": "_id",
+                    "as": "author"
+                }
+            }, {
+                "$unwind": "$author"
+            }, {
+                "$project": {
+                    "_id": 1,
+                    "title": 1,
+                    "body": 1,
+                    "url": 1,
+                    "created": 1,
+                    "author.username": 1,
+                    "author.title": 1
+                }
+            }
+        ], (error, response) => {
             if (error) {
                 return next(error)
             } else {
@@ -70,6 +89,7 @@ router.route('/:id').get((req, res, next) => {
         }).sort({
             _id: -1
         }).limit(5);
+
     } catch (err) {
         console.error(err);
         return res.status(200).json({
