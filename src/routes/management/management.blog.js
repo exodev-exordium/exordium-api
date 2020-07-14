@@ -17,13 +17,49 @@ const { recaptchaApi, recaptchaSecret } = require('../../variables/recaptcha');
 // Get Blogs
 router.route('/').get(authorize, (req, res, next) => {
     if (checkAccessPage(req.access.pages, 'blogs-overview')) {
-        blogSchema.find((error, response) => {
-            if (error) {
-                return next(error)
-            } else {
-                res.status(200).json(response)
-            }
-        })
+
+        try {
+
+            blogSchema.aggregate([
+                {
+                    "$lookup": {
+                        "from": "users", // collection name in db
+                        "localField": "created.person",
+                        "foreignField": "_id",
+                        "as": "author"
+                    }
+                }, {
+                    "$unwind": "$author"
+                }, {
+                    "$project": {
+                        "_id": 1,
+                        "title": 1,
+                        "body": 1,
+                        "url": 1,
+                        "disabled": 1,
+                        "created": 1,
+                        "author.username": 1,
+                        "author.title": 1
+                    }
+                }
+            ], (error, response) => {
+                if (error) {
+                    return next(error)
+                } else {
+                    res.status(200).json(response)
+                }
+            }).sort({
+                _id: -1
+            }).limit(5);
+
+        } catch (err) {
+            console.error(err);
+            return res.status(200).json({
+                status: "error",
+                message: "No blogs were found"
+            });
+        }
+
     } else {
         res.status(401).json({ 
             status: "error", 
@@ -35,15 +71,52 @@ router.route('/').get(authorize, (req, res, next) => {
 // Get specific blog
 router.route('/:id').get(authorize, (req, res, next) => {
     if (checkAccessPage(req.access.pages, 'blogs-overview')) {
-        blogSchema.findOne({
-            url: req.params.url
-        }, (error, response) => {
-            if (error) {
-                return next(error)
-            } else {
-                res.status(200).json(response)
-            }
-        })
+
+        try {
+
+            blogSchema.aggregate([
+                {
+                    "$match": {
+                        "url": req.params.id
+                    }
+                }, {
+                    "$lookup": {
+                        "from": "users", // collection name in db
+                        "localField": "created.person",
+                        "foreignField": "_id",
+                        "as": "author"
+                    }
+                }, {
+                    "$unwind": "$author"
+                }, {
+                    "$project": {
+                        "_id": 1,
+                        "title": 1,
+                        "body": 1,
+                        "url": 1,
+                        "disabled": 1,
+                        "created": 1,
+                        "author.username": 1,
+                        "author.title": 1
+                    }
+                }
+            ], (error, response) => {
+                if (error) {
+                    return next(error)
+                } else {
+                    res.status(200).json(response)
+                }
+            }).sort({
+                _id: -1
+            }).limit(5);
+
+        } catch (err) {
+            return res.status(200).json({
+                status: "error",
+                message: "No blogs were found"
+            });
+        }
+
     } else {
         res.status(401).json({ 
             status: "error", 
