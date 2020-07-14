@@ -43,7 +43,6 @@ router.route('/').get((req, res, next) => {
         }).limit(5);
         
     } catch (err) {
-        console.error(err);
         return res.status(200).json({
             status: "error",
             message: "No blogs were found"
@@ -91,7 +90,6 @@ router.route('/:id').get((req, res, next) => {
         }).limit(5);
 
     } catch (err) {
-        console.error(err);
         return res.status(200).json({
             status: "error",
             message: "No blogs were found"
