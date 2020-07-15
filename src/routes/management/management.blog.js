@@ -13,6 +13,7 @@ dotenv.config();
 
 // Recaptcha
 const { recaptchaApi, recaptchaSecret } = require('../../variables/recaptcha');
+const { announcementSend } = require('../../middleware/discordSend');
 
 // Get Blogs
 router.route('/').get(authorize, (req, res, next) => {
