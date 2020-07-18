@@ -3,34 +3,53 @@ const Schema = mongoose.Schema;
 
 let blogSchema = new Schema({
     title: {
-        type: String
+        type: String,
+        required: true
     },
     body: {
-        type: String
+        type: String,
+        required: true
     },
     url: {
         type: String,
-        lowercase: true
+        lowercase: true,
+        required: true
+    },
+    cover: {
+        type: String,
+        default: null
+    },
+    colour: {
+        type: String,
+        default: null
+    },
+    type: {
+        type: String,
+        lowercase: true,
+        enum: ['devblog', 'development', 'update', 'blog'],
+        default: 'development',
+        required: true
     },
     disabled: {
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     updated: {
         person: {
             type: mongoose.ObjectId,
         },
         updatedAt: {
-            type: Date,
-            default: Date.now
+            type: Date
         }
     },
     created: {
         person: {
             type: mongoose.ObjectId,
+            required: true
         },
         createdAt: {
             type: Date,
-            default: Date.now
+            required: true
         }
     }
 }, {
