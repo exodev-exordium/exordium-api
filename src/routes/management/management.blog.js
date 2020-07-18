@@ -8,11 +8,14 @@ const blogSchema = require('../../models/Blog');
 const authorize = require("../../middleware/auth");
 const checkAccessPage = require("../../variables/check-access");
 
+const upload = require('../../middleware/multerFiles');
+
 // Grab the .env configuration
 dotenv.config();
 
 // Recaptcha
 const { recaptchaApi, recaptchaSecret } = require('../../variables/recaptcha');
+const { generateColour } = require('../../variables/colour');
 const { announcementSend } = require('../../middleware/discordSend');
 
 // Get Blogs
@@ -127,18 +130,7 @@ router.route('/:id').get(authorize, (req, res, next) => {
 });
 
 // Add new blog post
-router.route('/add').post([
-    authorize,
-    check('title', 'Title must be provided!')
-        .not()
-        .isEmpty(),
-    check('body', 'Body must be provided!')
-        .not()
-        .isEmpty(),
-    check('url', 'URL must be provided')
-        .not()
-        .isEmpty()
-], (req, res, next) => {
+router.route('/add').post(authorize, upload.single('cover'), (req, res, next) => {
     // Were there errors during checks?
     const errors = validationResult(req);
 
@@ -161,6 +153,8 @@ router.route('/add').post([
                     title: req.body.title,
                     body: req.body.body,
                     url: req.body.url,
+                    cover: req.file.path,
+                    colour: generateColour(),
                     created: {
                         person: req.id,
                         createdAt: new Date().now
