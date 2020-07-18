@@ -30,6 +30,7 @@
     "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "discord-oauth2": "^2.1.0",
     "discord-webhook-node": "^1.1.0",
     "dotenv": "^8.2.0",
@@ -38,6 +39,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.7",
     "mongoose-unique-validator": "^2.0.3",
+    "multer": "^1.4.2",
     "request": "^2.88.2"
   }
 }
