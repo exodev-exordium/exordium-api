@@ -6,6 +6,7 @@ Date: 2020-03-16
 
 // Modules
 const dotenv = require('dotenv');
+const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -38,7 +39,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-
+// Uploads Router
+app.use('/public/uploads', express.static(path.join(__dirname, '../uploads')));
 // Contact Router
 const publicContact = require('./routes/public/public.contact');
 app.use('/public/contact', publicContact);
