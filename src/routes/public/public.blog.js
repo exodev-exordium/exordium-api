@@ -27,6 +27,8 @@ router.route('/').get((req, res, next) => {
                     "title": 1,
                     "body": 1,
                     "url": 1,
+                    "cover": 1,
+                    "colour": 1,
                     "created": 1,
                     "author.username": 1,
                     "author.title": 1
@@ -40,7 +42,7 @@ router.route('/').get((req, res, next) => {
             }
         }).sort({
             _id: -1
-        }).limit(5);
+        }).limit(10);
         
     } catch (err) {
         return res.status(200).json({
@@ -74,6 +76,7 @@ router.route('/:id').get((req, res, next) => {
                     "title": 1,
                     "body": 1,
                     "url": 1,
+                    "cover": 1,
                     "created": 1,
                     "author.username": 1,
                     "author.title": 1
