@@ -4,4 +4,6 @@ function generateColour() {
                (20 + 30 * Math.random()) + '%)'
 }
 
-module.exports = generateColour;
+module.exports = {
+    generateColour: generateColour
+}
