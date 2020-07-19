@@ -131,6 +131,8 @@ router.route('/:id').get(authorize, (req, res, next) => {
 
 // Add new blog post
 router.route('/add').post(authorize, upload.single('cover'), (req, res, next) => {
+    console.log(req.body);
+    
     // Were there errors during checks?
     const errors = validationResult(req);
 
@@ -153,7 +155,7 @@ router.route('/add').post(authorize, upload.single('cover'), (req, res, next) =>
                     title: req.body.title,
                     body: req.body.body,
                     url: req.body.url,
-                    cover: req.file.path,
+                    cover: req.body.file.path,
                     colour: generateColour(),
                     created: {
                         person: req.id,
