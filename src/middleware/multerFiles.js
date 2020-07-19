@@ -14,16 +14,17 @@ then remove the files without pushing that they were deleted.
 */
 
 const multer = require('multer');
+const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
 // Allow the following mimetypes
-const mimetypes = ['image/jpeg', 'image/png'];
+const mimetypes = ['image/jpg', 'image/jpeg', 'image/png'];
 
 // Storage Location and File Naming
 const storageBlog = multer.diskStorage({
     destination: function (req, file, callback) {
-        var dir = path.join(__dirname, '../uploads/blog');
+        var dir = path.join(__dirname, '../../uploads/blog');
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir);
         }
