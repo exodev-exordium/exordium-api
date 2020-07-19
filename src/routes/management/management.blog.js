@@ -16,7 +16,7 @@ dotenv.config();
 // Recaptcha
 const { recaptchaApi, recaptchaSecret } = require('../../variables/recaptcha');
 const { generateColour } = require('../../variables/colour');
-const { announcementSend } = require('../../middleware/discordSend');
+//const { announcementSend } = require('../../middleware/discordSend');
 
 // Get Blogs
 router.route('/').get(authorize, (req, res, next) => {
@@ -132,7 +132,7 @@ router.route('/:id').get(authorize, (req, res, next) => {
 // Add new blog post
 router.route('/add').post(authorize, upload.single('cover'), (req, res, next) => {
     console.log(req.body);
-    
+
     // Were there errors during checks?
     const errors = validationResult(req);
 
