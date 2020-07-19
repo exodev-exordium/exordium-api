@@ -23,7 +23,7 @@ const mimetypes = ['image/jpeg', 'image/png'];
 // Storage Location and File Naming
 const storageBlog = multer.diskStorage({
     destination: function (req, file, callback) {
-        var dir = path.join(__dirname, '../uploads');
+        var dir = path.join(__dirname, '../uploads/blog');
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir);
         }
