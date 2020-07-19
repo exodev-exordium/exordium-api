@@ -39,7 +39,8 @@ let blogSchema = new Schema({
             type: mongoose.ObjectId,
         },
         updatedAt: {
-            type: Date
+            type: Date,
+            default: Date().now
         }
     },
     created: {
