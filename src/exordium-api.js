@@ -37,7 +37,7 @@ mongoose.set('useCreateIndex', true); // Remove MongoDB warning error
 // Setup the server
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use('*', cors());
 
 
 /* =================================
