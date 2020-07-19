@@ -130,14 +130,12 @@ router.route('/:id').get(authorize, (req, res, next) => {
 });
 
 // Add new blog post
-router.route('/add').post(authorize, upload.single('cover'), (req, res, next) => {
-    console.log(req.body);
-
+router.route('/add').post([
+    authorize,
+    upload.single('cover'),
+], (req, res, next) => {
     // Were there errors during checks?
     const errors = validationResult(req);
-
-    // What is our current IP?
-    const ipAddress = req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
     // Did we have issues? otherwise we continue...
     if (!errors.isEmpty()) {
@@ -145,21 +143,32 @@ router.route('/add').post(authorize, upload.single('cover'), (req, res, next) =>
     } else {
 
         // Check and make sure the Recaptcha is correct.
+        const ipAddress = req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
         var checkRecaptcha = `${recaptchaApi}secret=${recaptchaSecret}&response=${req.body.recaptcha}&remoteip=${ipAddress}`;
 
         Request(checkRecaptcha, function(error, resp, body) {
             if (body.success !== undefined && !body.success) {
                 return res.status(422).jsonp({"status": "error", "message": "Captcha Validation failed"});
             } else {
+
+                // just make it null
+                var filename;
+                if (!req.file) {
+                    filename = null;
+                } else {
+                    filename = req.file.filename;
+                }
+
                 const post = new blogSchema({
                     title: req.body.title,
                     body: req.body.body,
                     url: req.body.url,
-                    cover: req.body.file.path,
+                    type: req.body.type,
+                    cover: filename,
                     colour: generateColour(),
                     created: {
                         person: req.id,
-                        createdAt: new Date().now
+                        createdAt: Date.now()
                     }
                 });
 
