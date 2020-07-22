@@ -14,7 +14,7 @@ router.route('/').get((req, res, next) => {
         blogSchema.aggregate([
             {
                 "$match": {
-                    "disabled": false || null
+                    "disabled": false
                 }
             }, {
                 "$lookup": {
@@ -63,7 +63,7 @@ router.route('/:id').get((req, res, next) => {
             {
                 "$match": {
                     "type": req.params.id,
-                    "disabled": false || null
+                    "disabled": false
                 }
             }, {
                 "$lookup": {
@@ -112,7 +112,7 @@ router.route('/post/:id').get((req, res, next) => {
             {
                 "$match": {
                     "url": req.params.id,
-                    "disabled": false || null
+                    "disabled": false
                 }
             }, {
                 "$lookup": {
