@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const blogSchema = require('../../models/Blog');
+const userSchema = require('../../models/User');
 
 // Grab the .env configuration
 dotenv.config();
@@ -141,9 +142,7 @@ router.route('/post/:id').get((req, res, next) => {
             } else {
                 res.status(200).json(response)
             }
-        }).sort({
-            _id: -1
-        }).limit(5);
+        }).limit(1);
 
     } catch (err) {
         return res.status(200).json({
@@ -152,5 +151,36 @@ router.route('/post/:id').get((req, res, next) => {
         });
     }
 });
+
+// Get Blog Author
+router.route('/author/:username/:title').get((req, res, next) => {
+
+    try {
+        userSchema.findOne({
+            "username": req.params.username.toLowerCase(),
+            "title": req.params.title[0].toUpperCase()+req.params.title.slice(1)
+        }, {
+            "username": 1,
+            "title": 1,
+        }).then(response => {
+            if(!response) {
+                return res.status(401).json({
+                    status: "error",
+                    message: "No author found."
+                });
+            } else {    
+                res.status(200).json(response);
+            }
+        }).catch(error => {
+            return next(error)
+        });
+    } catch (err) {
+        return res.status(200).json({
+            status: "error",
+            message: "No authors were found"
+        });
+    }
+});
+
 
 module.exports = router;
